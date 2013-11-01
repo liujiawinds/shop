@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="front" namespace="/front" extends="struts-shop">
+		<!-- 这里面的class不是指完整类路径，而是指在spring中定义的bean的名称 -->
+		<action name="regist_user" class="userAction" method="regist">
+			<result name="SUCCESS" type="redirect">/index.jsp</result>
+			<result name="ERROR" type="redirect">/front/regist.jsp</result>
+		</action>
+		<action name="login_user" class="userAction" method="login">
+			<result name="SUCCESS" type="redirect">/index.jsp</result>
+			<result name="ERROR" type="redirect">/front/login.jsp</result>
+		</action>
+		
+		<action name="modify_user" class="userAction" method="modify">
+			<result name="SUCCESS" type="redirect">/front/user_edit.jsp</result>
+		</action>
+		
+		<action name="modifyPersonalInfo" class="userAction" method="modifyPersonalInfo">
+			<result name="SUCCESS" type="redirect">/front/address.jsp</result>
+		</action>
+		
+		<action name="logout" class="userAction" method="logout">
+			<result name="SUCCESS" type="redirect">/index.jsp</result>
+		</action>
+		
+		<!-- ajax验证用户名是否可用 -->
+		<action name="valid_user" class="userAction" method="valid" />
+		
+		<!-- 商品相关 -->
+		<action name="show_product" class="productAction" method="show">
+			<result name="SUCCESS">/front/products.jsp</result>
+		</action>
+		
+		<action name="list_product" class="productAction" method="list">
+			<result name="SUCCESS">/front/show_product.jsp</result>
+		</action>
+		
+		<action name="detail_product" class="productAction" method="detail">
+			<result name="SUCCESS">/front/product_details.jsp</result>
+		</action>
+		
+		<action name="search_product" class="productAction" method="search">
+			<result name="SUCCESS" type="redirect">/front/products.jsp</result>
+		</action>
+		
+		<!-- 购物车相关 -->
+		<action name="add_cart" class="cartAction" method="add">
+			<result name="SUCCESS" type="redirect">/front/show_cart.action</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		
+		<action name="save_cart" class="cartAction" method="save">
+			<result name="SUCCESS" type="redirect">/front/show_cart.action</result>
+		</action>
+		
+		<action name="delete_cart" class="cartAction" method="delete">
+			<result name="SUCCESS" type="redirect">/front/show_cart.action</result>
+		</action>
+		
+		<action name="show_cart" class="cartAction" method="show">
+			<result name="SUCCESS" type="redirect">/front/cart.jsp</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		
+		<action name="moveToCollection_cart" class="cartAction" method="moveToCollection">
+			<result name="SUCCESS" type="redirect">/front/show_collection.action</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		
+		<!-- ajax修改购物车内商品数量 -->
+		<action name="modify_cart" class="cartAction" method="modify" />
+		
+		<!-- 订单相关 -->
+		<action name="add_order" class="orderAction" method="add">
+			<result name="SUCCESS" type="redirect">/front/show_order.action</result>
+		</action>
+		
+		<action name="show_order" class="orderAction" method="show">
+			<result name="SUCCESS" type="redirect">/front/checkout.jsp</result>
+		</action>
+		
+		<!-- 收藏夹相关	 -->
+		
+		<action name="show_collection" class="collectionAction" method="show">
+			<result name="SUCCESS" type="redirect">/front/collection.jsp</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		
+		<action name="delete_collection" class="collectionAction" method="delete">
+			<result name="SUCCESS" type="redirect">/front/show_collection.action</result>
+		</action>
+		
+		<action name="add_collection" class="collectionAction" method="add">
+			<result name="SUCCESS" type="redirect">/front/show_collection.action</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		<action name="moveToCart_collection" class="collectionAction" method="moveToCart">
+			<result name="SUCCESS" type="redirect">/front/show_cart.action</result>
+			<result name="LOGIN" type="redirect">/front/login.jsp</result>
+		</action>
+		
+	</package>
+	
+</struts>

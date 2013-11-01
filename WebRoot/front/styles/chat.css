@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+#divMain{
+	margin:0 auto;
+	margin-top:50px
+}
+.divShow{
+	text-align:left;
+	border:solid 1px #ccc;
+	height:200px;
+	padding:5px;
+	font-size:12px;
+	overflow-y:scroll
+}
+#divMain{
+	width:700px;
+	border:solid 5px #ccc
+}
+#divMain .divtip{
+	padding:10px;
+}
+#divMain .divtop{
+	width:600px;
+}
+#divMain .divtop .divL{
+	padding-left:20px;
+	float:left;
+	width:70%;
+	heihgt:300px;
+}
+#divMain .divtop .divR{
+	float:right;
+	width:20%;
+}
+#divMain .divBot{
+	clear:both;
+	padding:10px
+}
+#divFace{
+	text-align:left;
+}
+#spnMsg{position:absolute;border:solid 1px #cc3300;padding:2px;background-color:#ffe0a3;display:none}

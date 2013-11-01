@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+	<diskStore path="d:\cache" />
+	<defaultCache maxElementsInMemory="1000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
+	<cache name="org.liujia.shop.model.Admin" maxElementsInMemory="10"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+	<cache name="org.liujia.shop.model.Category" maxElementsInMemory="20"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+	<cache name="org.liujia.shop.model.Product" maxElementsInMemory="1000"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+	<cache name="org.liujia.shop.model.User" maxElementsInMemory="100"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+	<cache name="org.liujia.shop.model.Privilege" maxElementsInMemory="3"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+	<cache name="org.liujia.shop.model.Cart" maxElementsInMemory="10"
+		eternal="true" timeToIdleSeconds="0" timeToLiveSeconds="0"
+		overflowToDisk="false" />
+</ehcache>
