@@ -47,4 +47,9 @@ public class CartDaoImpl extends GenericDaoHibImpl<Cart, Integer> implements Car
 		List<Cart> list = getHibernateTemplate().find("from Cart as cart where cart.userId=? and cart.isLike=1",userId);
 		return list;
 	}
+
+	public List<Cart> findCartByOrderId(Integer orderId) {
+		List<Cart> list = getHibernateTemplate().find("from Cart as cart where cart.orderId=? and cart.isLike=0",orderId);
+		return list;
+	}
 }

@@ -36,7 +36,7 @@
                     	<li><a href="account.jsp">个人账户</a></li>
                         <li><a href="front/show_collection.action">收藏夹</a></li>
                         <li><a href="front/show_cart.action">购物车</a></li>
-                        <li><a href="checkout.jsp">结算</a></li>
+<%--                        <li><a href="checkout.jsp">结算</a></li>--%>
                         
                         <s:if test="#session.user_logined==null">
                         	<li><a href="login.jsp">登录</a></li>

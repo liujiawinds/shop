@@ -36,7 +36,6 @@
     <link rel="stylesheet" href="styles/color.css" />
 	<link rel="stylesheet" href="styles/layout.css" />
     
-	<link href='../../fonts.googleapis.com/css@family=Droid+Sans_3A400,700' rel='stylesheet' type='text/css'>
 	<!--[if lt IE 9]>
 		<script src="../../html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -104,22 +103,22 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                   <s:iterator value="#session.cartItems" id="cart">
+                   <s:iterator value="#session.cartItems" id="cart" status="st">
                     <tr>
                         <td class="remove"><a class="remove" title="Remove this item" href="front/delete_cart.action?cartId=${cart.id }">X</a></td>
                         <td class="moveToCollection"><a class="remove" title="move to collection" href="front/moveToCollection_cart.action?cartId=${cart.id }">☆</a></td>
                         <td align=center class="product"><img src="images/content/product/${cart.product.id }/${cart.product.id }_in_l.jpg" alt="" style="width:50px;height:70px;" class="alignright imgborder"/></td>
                         <td class="desc">${cart.product.name }</td>
-                        <td class="unit-price" id="unit_price">￥${cart.product.price }</td>
+                        <td class="unit-price" id="unit_price${st.index}">￥${cart.product.price }</td>
                         <td class="unit-price">M</td>
                         <td>
                         <div class="quantity buttons_added">
-                            <input type="button" class="minus" id="minus" value="-">
-                            <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="${cart.quantity }" id="quantity">
-                            <input type="button" class="plus" id="add" value="+">
+                            <input type="button" class="minus" id="minus" value="-" onclick="minus(${st.index})">
+                            <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="${cart.quantity }" id="quantity${st.index }">
+                            <input type="button" class="plus" id="plus" value="+" onclick="plus(${st.index})">
                         </div>	
                         </td>
-                        <td id="totalPrice">￥${cart.product.price*cart.quantity } </td>
+                        <td id="totalPrice${st.index }">￥${cart.product.price*cart.quantity } </td>
                     </tr>
                     </s:iterator>
                     </tbody>
@@ -162,27 +161,32 @@
 <script type="text/javascript" src="js/custom.js"></script>
 
 <SCRIPT type="text/javascript">
-	$(document).ready(function(){
-			var quantity = $("#quantity").val();
-			var tempPrice = $("#unit_price").text();
-			var tempPrice2 = tempPrice.substr(1);
-			var price = parseFloat(tempPrice2);
-		$("#minus").click(function(){
-			if(quantity>1){
-				quantity--;
-				var totalPrice = quantity*price;
-				$("#quantity").attr("value",quantity);
-				$("#totalPrice").text("￥"+totalPrice);
-				}
-						
-			});
-		$("#add").click(function(){
-			quantity++;
+	
+	function minus(index){
+		var quantity = $("#quantity"+index).val();
+		var tempPrice = $("#unit_price"+index).text();
+		var tempPrice2 = tempPrice.substr(1);
+		var price = parseFloat(tempPrice2);
+		if(quantity>1){
+			quantity--;
 			var totalPrice = quantity*price;
-			$("#quantity").attr("value",quantity);
-			$("#totalPrice").text("￥"+totalPrice);
-		});
-		});
+			$("#quantity"+index).val(quantity);
+			$("#totalPrice"+index).text("￥"+totalPrice);
+		}
+	}
+	
+	function plus(index){
+		var quantity = $("#quantity"+index).val();
+		console.log(quantity);
+		var tempPrice = $("#unit_price"+index).text();
+		var tempPrice2 = tempPrice.substr(1);
+		var price = parseFloat(tempPrice2);
+		quantity++;
+		var totalPrice = quantity*price;
+		$("#quantity"+index).val(quantity);
+		$("#totalPrice"+index).text("￥"+totalPrice);
+	}
+	
 </SCRIPT>
 </body>
 </html>

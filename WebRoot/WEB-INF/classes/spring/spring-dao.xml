@@ -34,4 +34,7 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean name="queryEngine" class="org.liujia.core.dao.support.QueryEngineImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 </beans>

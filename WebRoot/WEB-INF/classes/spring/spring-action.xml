@@ -13,11 +13,11 @@
 		   
 	   <bean name="userAction" class="org.liujia.shop.action.UserAction" scope="prototype">
 	   		<property name="userService" ref="userService" />
+	   		<property name="queryService" ref="queryService" />
 	   </bean>
 	   
 	   <bean name="productAction" class="org.liujia.shop.action.ProductAction" scope="prototype">
 	   		<property name="productService" ref="productService" />
-	   		<property name="categoryService" ref="categoryService" />
 	   </bean>
 
 	   <bean name="adminAction" class="org.liujia.shop.action.AdminAction" scope="prototype">
@@ -26,6 +26,7 @@
 	
 	   <bean name="categoryAction" class="org.liujia.shop.action.CategoryAction" scope="prototype">
 	   		<property name="categoryService" ref="categoryService" />
+	   		<property name="queryService" ref="queryService" />
 	   </bean>
 	   
 	   <bean name="cartAction" class="org.liujia.shop.action.CartAction" scope="prototype">
@@ -39,9 +40,9 @@
 	   </bean>
 		
 		<bean name="orderAction" class="org.liujia.shop.action.OrderAction" scope="prototype">
-	   		<property name="cartService" ref="cartService" />
-	   		<property name="productService" ref="productService" />
 			<property name="orderService" ref="orderService" />
+			<property name="productService" ref="productService" />
+			<property name="cartService" ref="cartService" />
 		</bean>	   
 		
 </beans>

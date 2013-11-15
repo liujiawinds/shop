@@ -8,8 +8,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts2.ServletActionContext;
+import org.liujia.core.service.QueryService;
 import org.liujia.core.util.MD5;
+import org.liujia.shop.dto.PurchaseRecord;
 import org.liujia.shop.model.User;
 import org.liujia.shop.service.UserService;
 
@@ -17,40 +21,11 @@ import com.opensymphony.xwork2.ActionContext;
 
 @SuppressWarnings("unchecked")
 public class UserAction {
-	int i=0;
-	String msg;
+	private String msg;
 	private User user;
-	String newPassword;
+	private String newPassword;
 	private UserService userService;
-	
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+	private QueryService<User> queryService;
 	
 	
 	//------------------------------前台方法--------------------------
@@ -74,6 +49,22 @@ public class UserAction {
 		}else {
 			msg="邮箱或者密码输入错误，请检查后重新输入！";
 			return "ERROR";
+		}
+	}
+	
+	public void modifyAddress(){
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse response=ServletActionContext.getResponse();
+		String address=request.getParameter("address");
+		Map<String,Object> session = ActionContext.getContext().getSession();
+		User user = (User) session.get("user_logined");
+		user = userService.findById(user.getId());
+		user.setAddress(address);
+		userService.update(user);
+		try {
+			response.getWriter().write("success");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -139,13 +130,80 @@ public class UserAction {
 		return "SUCCESS";
 	}
 	
+	/**返回购买记录
+	 * @return
+	 */
+	public void showRecord(){
+		Map<String ,Object> session = ActionContext.getContext().getSession();
+		user = (User) session.get("user_logined");
+		List<PurchaseRecord> recordList = userService.getPurchaseRecord(user);
+		ServletActionContext.getRequest().setAttribute("recordList", recordList);
+		
+		JSONArray json = JSONArray.fromObject(recordList);
+		
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//--------------------------------后台方法--------------------------
 	public String listAll(){
-		List<User> users = userService.findAll();
+		List<Map<String,Object>> users = queryService.getList(User.class, "", "", "", true);
 		ActionContext context=ActionContext.getContext();
-		Map session=context.getSession();
+		Map<String, Object> session=context.getSession();
 		session.put("usersInDb", users);
 		return "SUCCESS";
+	}
+	
+	public String getUserInfo(){
+		String userId = ServletActionContext.getRequest().getParameter("userId");
+		user =  userService.findById(Integer.valueOf(userId));
+		return "SUCCESS";
+	}
+	
+	public String saveUserInfo(){
+		User originUser = userService.findById(user.getId());
+		originUser.setEmail(user.getEmail());
+		originUser.setTelephone(user.getTelephone());
+		originUser.setUsername(user.getUsername());
+		userService.update(originUser);
+		return "SUCCESS";
+	}
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setQueryService(QueryService<User> queryService) {
+		this.queryService = queryService;
 	}
 	
 }

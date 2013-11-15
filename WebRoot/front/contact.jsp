@@ -131,7 +131,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/custom.js"></script>
 
 <!-- Form Contact Script -->
-<script type="text/javascript" src="js/contact.js"></script>
 <script type="text/javascript" src="js/chat.js"></script>
 </body>
 </html>

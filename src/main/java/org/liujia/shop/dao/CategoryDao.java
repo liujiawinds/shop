@@ -6,5 +6,4 @@ import org.liujia.shop.model.Category;
 
 
 public interface CategoryDao extends GenericDao<Category, Integer>{
-
 }

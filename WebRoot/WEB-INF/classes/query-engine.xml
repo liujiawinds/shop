@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE query[
+<!ELEMENT query (class*)>
+<!ELEMENT class (parm*)>
+<!ATTLIST class name CDATA #IMPLIED>	 <!-- 实体类名(必须和调用查询引擎时传入的类名一样) -->
+<!ATTLIST class alias CDATA #REQUIRED>	 <!-- 类的别名 -->
+<!ATTLIST parm property CDATA #REQUIRED>	<!-- 属性名 -->
+<!ATTLIST parm name CDATA #IMPLIED>	 <!-- 参数名 -->
+<!ATTLIST parm alias CDATA #IMPLIED>	 <!-- 属性别名 -->
+<!ATTLIST parm is-select CDATA #IMPLIED>	<!-- 是否选择查询 -->
+<!ATTLIST parm is-relation CDATA #IMPLIED>  <!-- 是否是关联属性 -->
+]>
+<query>
+	
+	<class name="org.liujia.shop.model.Cart" alias="c">
+		<parm name="id" property="id"/>
+		<parm name="userId" property="userId" />
+		<parm name="productId" property="productId" />
+		<parm name="quantity" property="quantity" />
+		<parm name="isLike" property="isLike" />
+	</class>
+	
+	<class name="org.liujia.shop.model.User" alias="u">
+		<parm name="id" property="id" />
+		<parm name="username" property="username" />
+		<parm name="password" property="password" />
+		<parm name="address" property="address" />
+		<parm name="email" property="email" />
+		<parm name="telephone" property="telephone" />
+		<parm name="registDate" property="registDate" />
+		<parm name="postcode" property="postcode" />
+		<parm name="realName" property="realName" />
+		<parm name="balance" property="balance" />
+	</class>
+	
+	<class name="org.liujia.shop.model.Order" alias="o">
+		<parm name="id" property="id" />
+		<parm name="orderTime" property="orderTime" />
+		<parm name="status" property="status" />
+		<parm name="payway" property="payway" />
+		<parm name="remark" property="remark" />
+		<parm name="sendTime" property="sendTime" />
+		<parm name="address" property="address" />
+		<parm name="totoalPrice" property="totoalPrice" />
+		<parm name="cart" property="cart" />
+		<parm name="product" property="product" is-select="false"/>
+		<parm name="userId" property="userId" />
+	</class>	
+
+	<class name="org.liujia.shop.model.Product" alias="p">
+		<parm name="id" property="id" />
+		<parm name="name" property="name" />
+		<parm name="category" property="category" />
+		<parm name="price" property="price" />
+		<parm name="description" property="discription" />
+		<parm name="addTime" property="addTime" />
+		<parm name="amount" property="amount" />
+	</class>
+	
+	<class name="org.liujia.shop.model.Privilege" alias="p">
+		<parm name="role" property="role" />
+		<parm name="operation" property="operation" />
+	</class>
+	
+	<class name="org.liujia.shop.model.Category" alias="c">
+		<parm name="id" property="id" />
+		<parm name="name" property="name" />
+		<parm name="parentId" property="parentId" />
+	</class>
+	
+	<class name="org.liujia.shop.model.Admin" alias="a">
+		<parm name="id" property="id" />
+		<parm name="name" property="name" />
+		<parm name="password" property="password" />
+		<parm name="type" property="type" />
+	</class>
+</query>

@@ -40,7 +40,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jquery.thickbox.js" type="text/javascript"></script>
 	<script src="js/jquery.livequery.js" type="text/javascript"></script>
 	<script src="js/switchImg.js" type="text/javascript"></script>
-	<script src="js/switchColor.js" type="text/javascript"></script>
 	<script src="js/sizeAndprice.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
 
@@ -81,16 +80,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="outermain">
                 	
         			
-					<div class="pro_detail">
-						<div class="pro_detail_left">
-							<ul style="list-style:none;">
+					<div class="pro_detail clearfix">
+						<div class="pro_detail_left clearfix">
+							<ul style="list-style:none;" class="left">
 								<li><img src="images/content/product/${product.id }/${product.id }_bk_xs.jpg" alt="" /></li>
 								<li><img src="images/content/product/${product.id }/${product.id }_cu_xs.jpg" alt="" /></li>
 								<li><img src="images/content/product/${product.id }/${product.id }_fr_xs.jpg" alt="" /></li>
 								<li><img src="images/content/product/${product.id }/${product.id }_in_xs.jpg" alt="" /></li>
 								<li><img src="images/content/product/${product.id }/${product.id }_ou_xs.jpg" alt="" /></li>
 							</ul>
-							<div class="jqzoom"><img src="images/content/product/${product.id }/${product.id }_fr_l.jpg" class="fs" alt=""  jqimg="images/content/product/${product.id }/${product.id }_fr_xl.jpg" id="bigImg"/></div>
+							<div class="jqzoom" class="left"><img src="images/content/product/${product.id }/${product.id }_fr_l.jpg" class="fs" alt=""  jqimg="images/content/product/${product.id }/${product.id }_fr_xl.jpg" id="bigImg"/></div>
 							<span>
 				                <a href="images/content/product/${product.id }/${product.id }_fr_xl.jpg" id="thickImg" title="${product.name }" class="thickbox">
 				                   <img alt="点击看大图" src="images/look.gif" />

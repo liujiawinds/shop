@@ -5,8 +5,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%
-	User user = (User)session.getAttribute("user_logined");
-	if(user==null)response.sendRedirect("login.jsp");
+	if(session.getAttribute("user_logined")==null)response.sendRedirect("login.jsp");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -37,7 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="styles/color.css" />
 	<link rel="stylesheet" href="styles/layout.css" />
     
-	<link href='../../fonts.googleapis.com/css@family=Droid+Sans_3A400,700' rel='stylesheet' type='text/css'>
 	<!--[if lt IE 9]>
 		<script src="../../html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -95,24 +93,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <th colspan="2" class="status"><span class="nobr">订单状态</span></th>
                         </tr>
                     </thead>
-                    
-                    <tbody>
-                        <tr class="order">
-                            <td>1</td>
-                            <td><time>2013-5-15</time></td>
-                            <td>渐变色条纹棉布毛衣</td>
-                            <td class="ship"><address>四川省成都市高新区天华路英郡一期7栋15楼6号</address></td>
-                            <td>￥706.00</td>
-                            <td>已签收</td>
-                            <td><a href="front/delete_order.action?recordId=${record.id }" class="button">删除</a></td>
-                        </tr>
-                    </tbody>
+	                    <tbody id="recordTable">
+	                    </tbody>
                 </table>
                 <br>
 
                 <div class=" one_half firstcols">
 					<header class="title2">				
-                        <h4>我的地址</h4>
+                        <h4>我的地址</h4>&nbsp;&nbsp;&nbsp;&nbsp;默认为订单派送地址
                         <a href="#" class="edit" id="update">更新</a>	
                     </header>
                     <div class="clear"></div>
@@ -150,31 +138,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/custom.js"></script>
 
 <!-- Twitter Script -->
-<script type="text/javascript" src="js/jquery.tweet.js" ></script>
+
 
 <script type="text/javascript">
+	$(document).ready(function(){
+		$.get('/shop/front/show_record.action',function(retStr){ 
+			var data = eval('(' + retStr + ')'); 
+           	var html = "";
+			for(var i in data){
+				html += "<tr class='order'><td>"+data[i].id+"</td><td><time>"+data[i].orderTime+"</td></time><td>"+data[i].productName+"</td><td class='ship'><address>"
+				+data[i].address+"</address></td><td>￥"+data[i].totalPrice+"</td><td>"+data[i].status+"</td><td><a href='front/delete_order.action?recordId='"+data[i].id+"' class='button'>删除</a></td></td></tr>";
+            }
+			$("#recordTable").html(html);
+		});
+	});
 
-jQuery(document).ready(function() {
-	//Twitter
 	$("#update").click(function(){
 		var address = $("#address").val();
-		.$ajax(function(){
-			url:front/modify_address.action,
-			type:post,
+		$.ajax({
+			url:'modify_address.action',
+			type:'post',
 			data:{
-				address:address;
+				address:address
 			},
-			success:function(){
+			success:function(msg){
 				alert("修改成功！");
-				}
+			}
 			});
 		});
-});
+
 </script>	
 
 <!-- Demo Switcher -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/switcher.js"></script>
 
 </body>
 </html>

@@ -27,16 +27,17 @@ public class Order implements Serializable{
 	 */
 	private static final long serialVersionUID = -543213844077566053L;
 	private Integer id;
-	private Date orderDate;
+	private Date orderTime;
 	private String status;
-	private String payway;
+	private String payment;
 	private String remark;
-	private Date sendDate;
-	private String destination;
+	private Date sendTime;
+	private String address;
 	private float totoalPrice;
 	private List<Cart> cart=new ArrayList<Cart>();
 	private Integer userId;
 	private List<Product> product;
+	
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -54,28 +55,12 @@ public class Order implements Serializable{
 		this.status = status;
 	}
 	
-	public String getPayway() {
-		return payway;
+	public String getPayment() {
+		return payment;
 	}
-	public void setPayway(String payway) {
-		this.payway = payway;
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
-	
-	@Column(name="order_time",nullable=false)
-	public Date getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-	@Column(name="send_time")
-	public Date getSendDate() {
-		return sendDate;
-	}
-	public void setSendDate(Date sendDate) {
-		this.sendDate = sendDate;
-	}
-	
 	public String getRemark() {
 		return remark;
 	}
@@ -83,13 +68,6 @@ public class Order implements Serializable{
 		this.remark = remark;
 	}
 	
-	@Column(name="address")
-	public String getDestination() {
-		return destination;
-	}
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
 	@Column(name="total_price",nullable=false)
 	public float getTotoalPrice() {
 		return totoalPrice;
@@ -119,6 +97,26 @@ public class Order implements Serializable{
 	}
 	public void setProduct(List<Product> product) {
 		this.product = product;
+	}
+	@Column(name="order_time")
+	public Date getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+	@Column(name="send_time")
+	public Date getSendTime() {
+		return sendTime;
+	}
+	public void setSendTime(Date sendTime) {
+		this.sendTime = sendTime;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 }

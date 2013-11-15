@@ -14,4 +14,5 @@ public interface CartDao extends GenericDao<Cart, Integer>{
 	public List<Cart> findCartByUserId(Integer userId);
 	public Cart findCartByUserIdAndProductId(Integer userId, Integer productId);
 	public List<Cart> findCollectionByUserId(Integer userId);
+	public List<Cart> findCartByOrderId(Integer orderId);
 }

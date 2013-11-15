@@ -1,5 +1,8 @@
 package org.liujia.shop.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import org.liujia.shop.dao.OrderDao;
 import org.liujia.shop.model.Order;
 import org.liujia.shop.service.OrderService;
@@ -28,10 +31,13 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.findById(orderId);
 	}
 
-	public Order findByUserId(Integer userId) {
+	public List<Order> findByUserId(Integer userId) {
 		return orderDao.findByUserId(userId);
 	}
 
-	
+	public Order findByOrderTime(Date date) {
+		return orderDao.findByOrderTime(date);
+	}
+
 
 }

@@ -27,7 +27,6 @@ function showsubmenu(sid) {
 }
 </script>
 <meta http-equiv=Content-Type content=text/html;charset=gb2312>
-<meta http-equiv="refresh" content="60">
 <script language=JavaScript1.2>
 function showsubmenu(sid) {
 	var whichEl = eval("submenu" + sid);

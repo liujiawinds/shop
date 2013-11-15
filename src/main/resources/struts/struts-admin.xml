@@ -14,13 +14,17 @@
 		<action name="list_user" class="userAction" method="listAll">
 			<result name="SUCCESS" type="redirect">/admin/list_user.jsp</result>
 		</action>
+		<action name="saveUserInfo" class="userAction" method="saveUserInfo">
+			<result name="SUCCESS" type="redirectAction">/admin/list_user.action</result>
+		</action>
+		<action name="getUserInfo" class="userAction" method="getUserInfo">
+			<result name="SUCCESS">/admin/edit_user_info.jsp</result>
+		</action>
 		<action name="login_admin" class="adminAction" method="login">
 			<result name="SUCCESS" type="redirect">/admin/index.html</result>
 			<result name="LOGIN" type="redirect">/admin/login.jsp</result>
 		</action>		
-		<action name="preAdd_product" class="productAction" method="preAdd">
-			<result name="SUCCESS" type="redirect">/admin/add_product.jsp</result>
-		</action>
+		<action name="getCategory" class="categoryAction" method="getCategory" />
 	</package>
 	
 </struts>

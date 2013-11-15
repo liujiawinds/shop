@@ -9,7 +9,7 @@ import org.liujia.shop.model.Admin;
 import org.liujia.shop.service.AdminService;
 
 import com.opensymphony.xwork2.ActionContext;
-@SuppressWarnings("unchecked")
+
 public class AdminAction {
 	private Admin admin;
 	private int	adminId;
@@ -35,7 +35,7 @@ public class AdminAction {
 	
 	public String login(){
 		HttpServletRequest request=(HttpServletRequest) ServletActionContext.getRequest();
-		Map session=ActionContext.getContext().getSession();
+		Map<String, Object> session=ActionContext.getContext().getSession();
 		//验证码
 		String captcha=request.getParameter("captcha");
 		String checkNumber=(String) session.get("checkNumber");
@@ -58,7 +58,11 @@ public class AdminAction {
 		adminService.deleteById(adminId);
 	}
 	
-	public void update(){
-		
+	/**新增管理员
+	 * @return
+	 */
+	public String add(){
+		adminService.save(admin);
+		return "SUCCESS";
 	}
 }

@@ -37,7 +37,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="styles/color.css" />
 	<link rel="stylesheet" href="styles/layout.css" />
     
-	<link href='../../fonts.googleapis.com/css@family=Droid+Sans_3A400,700' rel='stylesheet' type='text/css'>
 	<!--[if lt IE 9]>
 		<script src="../../html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -102,11 +101,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="toggle_container">
                                 <div class="block" style="margin:0 0 20px 0;">
 								            <div class="cash-on-delivery">         
-								                <input type="radio" name="order.payment">
+								                <input type="radio" name="order.payment" checked="checked">
 								                <label style="float:none; display:inline;">货到付款</label><br>
 								            </div>
 								            <div class="pay-online">            
-								                <input  name="order.payment" type="radio" value="-1$-1$False$False$0" checked="checked/">
+								                <input  name="order.payment" type="radio" value="-1$-1$False$False$0"/>
 								                <label style="float:none; display:inline;">在线支付</label>  
 								              </div>          
 								            <div class="pay-postal">            
@@ -170,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        
                     
                         <div class="form-row">		
-                            <a href="front/add_order.action" class="button">提交订单</a>
+                            <a href="order.jsp" class="button">提交订单</a>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -208,12 +207,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- Demo Switcher -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/switcher.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		});
-</script>
 </body>
 </html>

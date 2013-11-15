@@ -1,6 +1,8 @@
 package org.liujia.shop.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableId;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.Store;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 
 @Entity
 @Table(name="Product")
+@Searchable
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Product implements Serializable {
 	
@@ -25,16 +32,19 @@ public class Product implements Serializable {
 	private Category category;
 	private float price;
 	private String description;
-	private String designer;
-	private String addDate;
+	private Date addTime;
 	private Integer amount;
+	private String designer;
+	
+	@SearchableId
 	@Id
 	@GeneratedValue
 	public Integer getId() {
 		return id;
 	}
 	
-	@Column(nullable=false)
+	@SearchableProperty(store = Store.YES)
+	@Column(name="name",nullable=false)
 	public String getName() {
 		return name;
 	}
@@ -45,21 +55,15 @@ public class Product implements Serializable {
 		return category;
 	}
 	
-	
-	
+	@SearchableProperty(store = Store.YES)
 	@Column(nullable=false)
 	public float getPrice() {
 		return price;
 	}
 	
-	public String getDesigner() {
-		return designer;
-	}
-
-	public void setDesigner(String designer) {
-		this.designer = designer;
-	}
-
+	
+	@SearchableProperty(store = Store.YES)
+	@Column(nullable=false)
 	public Integer getAmount() {
 		return amount;
 	}
@@ -67,11 +71,16 @@ public class Product implements Serializable {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-
+	
 	public String getDescription() {
 		return description;
 	}
 	
+	
+	@Column(name="add_time")
+	public Date getAddTime() {
+		return addTime;
+	}
 	
 	public void setId(Integer id) {
 		this.id = id;
@@ -82,21 +91,22 @@ public class Product implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	@Column(name="add_time")
-	public String getAddDate() {
-		return addDate;
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
+	
+	public String getDesigner() {
+		return designer;
 	}
 
-	public void setAddDate(String addDate) {
-		this.addDate = addDate;
+	public void setDesigner(String designer) {
+		this.designer = designer;
 	}
 
 	@Override
@@ -125,5 +135,4 @@ public class Product implements Serializable {
 		}
 		return true;
 	}
-	
 }

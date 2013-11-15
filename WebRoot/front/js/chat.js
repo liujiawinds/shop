@@ -59,7 +59,7 @@ $(function(){
             			success:function(data){
             				if(data.indexOf("unLogin")==0){
             					alert("非法进入，请先登录！");
-            					window.location="index.jsp";
+            					window.location="login.jsp";
             				}else{
             					$("#divContent").html(data);
             				}

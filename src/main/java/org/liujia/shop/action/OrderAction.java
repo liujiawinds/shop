@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.liujia.shop.model.Cart;
 import org.liujia.shop.model.Order;
 import org.liujia.shop.model.Product;
@@ -45,15 +48,18 @@ public class OrderAction {
 		Map<String ,Object> session = ActionContext.getContext().getSession();
 		User user = (User) session.get("user_logined");
 		Integer userId = user.getId();
-		Order order = orderService.findByUserId(userId);
-		List<Cart> cartItems = order.getCart();
-		List<Product> productList = new ArrayList<Product>();
-		for(Cart cart : cartItems){
-			Product product = productService.findById(cart.getProductId());
-			productList.add(product);
+		List<Order> orderList = orderService.findByUserId(userId);
+		if(orderList.size() > 0){
+			Order order = orderList.get(orderList.size()-1);
+			List<Cart> cartItems = order.getCart();
+			List<Product> productList = new ArrayList<Product>();
+			for(Cart cart : cartItems){
+				Product product = productService.findById(cart.getProductId());
+				productList.add(product);
+			}
+			order.setProduct(productList);
+			session.put("order", order);
 		}
-		order.setProduct(productList);
-		session.put("order", order);
 		return "SUCCESS";
 	}
 	
@@ -65,26 +71,25 @@ public class OrderAction {
 		{
 			order = new Order();
 		}
-		order.setOrderDate(new Date());
+		order.setOrderTime(new Date());
 		List<Cart> cartItems = (List<Cart>) session.get("cartItems");
 		order.setCart(cartItems);
 		float totalPrice = Float.valueOf(session.get("totalPrice").toString());
 		order.setTotoalPrice(totalPrice);
-		order.setDestination(user.getAddress());
-		order.setStatus("待完善订单信息");
+		order.setAddress(user.getAddress());
+		order.setPayment("货到付款");
+		order.setStatus("待发货");
 		order.setUserId(user.getId());
 		orderService.save(order);
-		order = orderService.findByUserId(user.getId());
-		for(Cart cart : cartItems){
-			cart.setOrderId(order.getId());
-			cartService.update(cart);
+		order = orderService.findByOrderTime(order.getOrderTime());//FIXME
+		if(cartItems!=null){
+			for(Cart cart : cartItems){
+				cart.setOrderId(order.getId());
+				cartService.update(cart);
+			}
+			session.remove("cartItems");
 		}
-		session.remove("cartItems");
 		return "SUCCESS";
 	}
 	
-	
-	public String modify(){
-		return "";
-	}
 }

@@ -20,9 +20,9 @@
 			<result name="SUCCESS" type="redirect">/front/user_edit.jsp</result>
 		</action>
 		
-		<action name="modifyPersonalInfo" class="userAction" method="modifyPersonalInfo">
-			<result name="SUCCESS" type="redirect">/front/address.jsp</result>
-		</action>
+		<action name="show_record" class="userAction" method="showRecord" />
+		
+		<action name="modify_address" class="userAction" method="modifyAddress" />
 		
 		<action name="logout" class="userAction" method="logout">
 			<result name="SUCCESS" type="redirect">/index.jsp</result>
@@ -47,6 +47,7 @@
 		<action name="search_product" class="productAction" method="search">
 			<result name="SUCCESS" type="redirect">/front/products.jsp</result>
 		</action>
+		
 		
 		<!-- 购物车相关 -->
 		<action name="add_cart" class="cartAction" method="add">

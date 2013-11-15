@@ -22,19 +22,19 @@
 				preload: 1
 
 			};
-
+			//合并参数
 			if(options) {
 				$.extend(settings, options);
 			}
 
 		    var noalt='';
-
+		    //放大对象参数
 		    $(this).hover(function(){
-                
-		    var imageLeft = $(this).offset().left;                
+            //获取左边距    
+		    var imageLeft = $(this).offset().left;  
+		    //获取上边距
 		    var imageTop = $(this).offset().top;
-
-               
+            //获取图片的l
 		    var imageWidth = $(this).children('img').get(0).offsetWidth;
 		    var imageHeight = $(this).children('img').get(0).offsetHeight;
 
@@ -59,23 +59,23 @@
 
             if(imageLeft + imageWidth + settings.offset + settings.xzoom > screen.width){
 
-            leftpos = imageLeft  - settings.offset - settings.xzoom;
+            leftpos = $(this).position().left - settings.offset - settings.xzoom;
 
             }else{
 
-		    leftpos = imageLeft + imageWidth + settings.offset;
+		    leftpos = $(this).position().left + imageWidth + settings.offset;
             }
 		    }else{
-		    leftpos = imageLeft - settings.xzoom - settings.offset;
+		    leftpos = $(this).position().left - settings.xzoom - settings.offset;
 		    if(leftpos < 0){
 
-            leftpos = imageLeft + imageWidth  + settings.offset;
+            leftpos = $(this).position().left + imageWidth  + settings.offset;
 
 		    }
 
 		    }
 
-		    $("div.zoomdiv").css({ top: imageTop,left: leftpos });
+		    $("div.zoomdiv").css({ top: $(this).position().top,left: leftpos });
 
 		    $("div.zoomdiv").width(settings.xzoom);
 
@@ -175,7 +175,7 @@
 
 		if(settings.preload){
 
-		$('body').append("<div style='display:none;' class='jqPreload"+count+"'>sdsdssdsd</div>");
+		$('body').append("<div style='display:none;' class='jqPreload"+count+"'></div>");
 
 		$(this).each(function(){
 

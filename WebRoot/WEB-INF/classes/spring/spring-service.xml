@@ -12,11 +12,15 @@
 		   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 		   
 	<bean name="userService" class="org.liujia.shop.service.impl.UserServiceImpl">
+		<property name="productDao" ref="productDao"></property>
+		<property name="cartDao" ref="cartDao"></property>
+		<property name="orderDao" ref="orderDao"></property>
 		<property name="userDao" ref="userDao"></property>
 	</bean>
 	
 	<bean name="productService" class="org.liujia.shop.service.impl.ProductServiceImpl">
 		<property name="productDao" ref="productDao"></property>
+		<property name="compassTemplate" ref="compassTemplate"></property>
 	</bean>
 	
 	<bean name="adminService" class="org.liujia.shop.service.impl.AdminServiceImpl">
@@ -33,6 +37,10 @@
 	
 	<bean name="orderService" class="org.liujia.shop.service.impl.OrderServiceImpl">
 		<property name="orderDao" ref="orderDao"></property>
+	</bean>
+	
+	<bean name="queryService" class="org.liujia.core.service.impl.QueryServiceImpl">
+		<property name="queryEngine" ref="queryEngine"></property>
 	</bean>
 	
 </beans>

@@ -15,7 +15,6 @@ import org.liujia.shop.service.ProductService;
 
 import com.opensymphony.xwork2.ActionContext;
 
-@SuppressWarnings("unchecked")
 public class CartAction {
 	private Cart cart;
 	private int cartId;
@@ -99,7 +98,7 @@ public class CartAction {
 	}
 	
 	public String show(){
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 		User user= (User) session.get("user_logined");
 		if(null==user)return "LOGIN";
 		Integer userId=user.getId();
@@ -107,7 +106,6 @@ public class CartAction {
 		
 		if (list!= null && list.size() > 0) {
 			for (Cart cart : list) {
-				
 				Product tempProduct = productService.findById(cart.getProductId());
 				cart.setProduct(tempProduct);
 				Integer quantity=cart.getQuantity();

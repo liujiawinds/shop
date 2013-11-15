@@ -157,7 +157,7 @@ H1 a {
         </table>
         <ul class="MM">
           <li><a href="<%=path %>/admin/list_product.action" target="main">商品信息</a></li>
-          <li><a href="admin/preAdd_product.action" target="main">商品添加</a></li>
+          <li><a href="add_product.jsp" target="main">商品添加</a></li>
           <li><a href="modify_product.jsp" target="main">商品信息修改</a></li>
         </ul>
       </div>

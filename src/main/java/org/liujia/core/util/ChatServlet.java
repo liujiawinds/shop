@@ -1,7 +1,6 @@
 package org.liujia.core.util;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,41 +67,42 @@ public class ChatServlet extends HttpServlet{
 		String action=request.getParameter("action");
 		HttpSession session=request.getSession();
 		ServletContext application=this.getServletContext();
-		//èŠå¤©è®°å½•
+		//ÁÄÌì¼ÇÂ¼
 		if("ChatList".equals(action)){
 			User user = (User) session.getAttribute("user_logined");
 			if(user==null){
-				response.sendRedirect("login.jsp");
-			}
-			String username =user.getUsername();
-			//è·å–åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
-			List<String> users=(List<String>)application.getAttribute("users");
-			if(users==null){
-				users=new ArrayList<String>();
-			}
-			//å°†å½“å‰ç”¨æˆ·åŠ å…¥ç”¨æˆ·åˆ—è¡¨
-			if(!users.contains(username)){
-				users.add(username);
-			}
-			//æ›´æ–°applicationä¸­çš„å¯¹è±¡
-			application.setAttribute("users", users);
-			if(username==null){
 				response.getWriter().write("unLogin");
 			}else{
-				response.getWriter().write(AllChatList(application));
+				String username =user.getUsername();
+				//»ñÈ¡ÔÚÏßÓÃ»§ÁĞ±í
+				List<String> users=(List<String>)application.getAttribute("users");
+				if(users==null){
+					users=new ArrayList<String>();
+				}
+				//½«µ±Ç°ÓÃ»§¼ÓÈëÓÃ»§ÁĞ±í
+				if(!users.contains(username)){
+					users.add(username);
+				}
+				//¸üĞÂapplicationÖĞµÄ¶ÔÏó
+				application.setAttribute("users", users);
+				if(username==null){
+					response.getWriter().write("unLogin");
+				}else{
+					response.getWriter().write(AllChatList(application));
+				}
 			}
 		}
-		//å‘é€æ¶ˆæ¯
+		//·¢ËÍÏûÏ¢
 		else if("SendContent".equals(action)){
 			String content=request.getParameter("content");
 			response.getWriter().write(addContent(content,application,session));
 			
 		}
-		//è·å–åœ¨çº¿äººå‘˜åˆ—è¡¨
+		//»ñÈ¡ÔÚÏßÈËÔ±ÁĞ±í
 		else if("onLineList".equals(action)){
 			response.getWriter().write(GetOnlineUsers(application));
 		}
-		//ä¸‹çº¿
+		//ÏÂÏß
 		else if("OffLine".equals(action)){
 			response.getWriter().write(OffLine(application,session));
 		}
@@ -118,28 +118,28 @@ public class ChatServlet extends HttpServlet{
 	}
 	
 
-	//æ·»åŠ æ¶ˆæ¯
+	//Ìí¼ÓÏûÏ¢
 	public String addContent(String content,ServletContext application,HttpSession session){
 		List<String> strList=(List<String>) application.getAttribute("MessageList");
 		if(strList==null){
 			strList=new ArrayList<String>();
 		}
-		//è·å–sessionä¸­çš„ç”¨æˆ·å
+		//»ñÈ¡sessionÖĞµÄÓÃ»§Ãû
 		User user = (User) session.getAttribute("user_logined");
 		String username=user.getUsername();
-		//è·å–æ—¶é—´
+		//»ñÈ¡Ê±¼ä
 		Date date=new Date();
 		content=content.replace("<:", "<img src='image/");
 		content=content.replace(":>", ".gif' />");
-		//ç»„è£…æ¶ˆæ¯
+		//×é×°ÏûÏ¢
 		String message="<font color=#6699CC face=Trebuchet MS>"+username+" "+date.toLocaleString()+"</font>\n<br>"+content;
-		//æ·»åŠ åˆ°é›†åˆä¸­
+		//Ìí¼Óµ½¼¯ºÏÖĞ
 		strList.add(message);
-		//æ”¾å…¥applicationå¯¹è±¡ä¸­
+		//·ÅÈëapplication¶ÔÏóÖĞ
 		application.setAttribute("MessageList", strList);
 		return "True";
 	}
-	//è·å–æ‰€æœ‰çš„æ¶ˆæ¯
+	//»ñÈ¡ËùÓĞµÄÏûÏ¢
 	public String AllChatList(ServletContext application){
 		StringBuffer sb=new StringBuffer();
 		List<String> strList=(List<String>) application.getAttribute("MessageList");
@@ -150,7 +150,7 @@ public class ChatServlet extends HttpServlet{
 		} 
 		return sb.toString();
 	}
-	//è·å–åœ¨çº¿ç”¨æˆ·åˆ—è¡¨
+	//»ñÈ¡ÔÚÏßÓÃ»§ÁĞ±í
 	public String GetOnlineUsers(ServletContext application){
 		StringBuffer sb=new StringBuffer();
 		List<String> users=(List<String>) application.getAttribute("users");
@@ -161,13 +161,13 @@ public class ChatServlet extends HttpServlet{
 		} 
 		return sb.toString();
 	}
-	//ä¸‹çº¿
+	//ÏÂÏß
 	public String OffLine(ServletContext application,HttpSession session){
-		//å…ˆå–å‡ºç”¨æˆ·å
+		//ÏÈÈ¡³öÓÃ»§Ãû
 		String username=(String)session.getAttribute("username");
-		//ç§»é™¤sessionä¸­çš„å†…å®¹
+		//ÒÆ³ısessionÖĞµÄÄÚÈİ
 		session.removeAttribute("username");
-		//ç§»é™¤ç”¨æˆ·åˆ—è¡¨ä¸­çš„ç”¨æˆ·å
+		//ÒÆ³ıÓÃ»§ÁĞ±íÖĞµÄÓÃ»§Ãû
 		List<String> users=(List<String>) application.getAttribute("users");
 		if(users!=null){
 			users.remove(username);

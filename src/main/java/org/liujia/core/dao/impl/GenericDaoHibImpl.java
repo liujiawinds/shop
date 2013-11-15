@@ -32,7 +32,7 @@ public class GenericDaoHibImpl<T,PK extends Serializable> extends HibernateDaoSu
 	}
 
 	public T save(T entity) {
-		getHibernateTemplate().save(entity);
+		getHibernateTemplate().saveOrUpdate(entity);
 		return entity;
 	}
 

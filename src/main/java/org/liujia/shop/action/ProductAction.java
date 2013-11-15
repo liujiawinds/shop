@@ -16,6 +16,7 @@ import java.util.Map;
 
 
 import org.apache.struts2.ServletActionContext;
+import org.liujia.core.service.QueryService;
 import org.liujia.shop.model.Category;
 import org.liujia.shop.model.Product;
 import org.liujia.shop.service.CategoryService;
@@ -132,12 +133,6 @@ public class ProductAction {
 		return "SUCCESS";
 	}
 	
-	public String preAdd(){
-		Map<String , Object> session = ActionContext.getContext().getSession();
-		List<Category> categoryList = categoryService.findAll();
-		session.put("categoryList", categoryList);
-		return "SUCCESS";
-	}
 	public String add(){
 		Map<String , Object> session = ActionContext.getContext().getSession();
 		List<Product> list = productService.findAll();
