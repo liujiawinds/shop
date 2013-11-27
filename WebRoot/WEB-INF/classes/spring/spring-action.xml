@@ -22,6 +22,7 @@
 
 	   <bean name="adminAction" class="org.liujia.shop.action.AdminAction" scope="prototype">
 	   		<property name="adminService" ref="adminService" />
+	   		<property name="queryService" ref="queryService" />
 	   </bean>
 	
 	   <bean name="categoryAction" class="org.liujia.shop.action.CategoryAction" scope="prototype">
@@ -43,6 +44,7 @@
 			<property name="orderService" ref="orderService" />
 			<property name="productService" ref="productService" />
 			<property name="cartService" ref="cartService" />
+			<property name="queryService" ref="queryService" />
 		</bean>	   
 		
 </beans>

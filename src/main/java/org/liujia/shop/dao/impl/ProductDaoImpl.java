@@ -10,12 +10,11 @@ import org.liujia.shop.model.Product;
 
 
 
-
+@SuppressWarnings("unchecked")
 public class ProductDaoImpl extends GenericDaoHibImpl<Product, Integer>
 		implements ProductDao {
 	
 
-	@SuppressWarnings("unchecked")
 	public List<Product> findProductByCategoryId(Integer id) {
 		List<Product> list = null;
 		if(id>4){
@@ -27,10 +26,16 @@ public class ProductDaoImpl extends GenericDaoHibImpl<Product, Integer>
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	public List<Product> searchProduct(String keyword) {
 		List<Product> list = getHibernateTemplate().find("from Product as p where p.name like '%"+keyword+"%'");
 		return list;
+	}
+
+	
+	public Product findProductByName(String productName) {
+		List<Product> productList = getHibernateTemplate().find("from Product as p where p.name = '"+productName+"' order by p.addTime desc");
+		return productList.get(0);
 	}
 
 }

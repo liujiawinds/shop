@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.liujia.core.service.QueryService;
@@ -172,6 +173,33 @@ public class UserAction {
 		originUser.setUsername(user.getUsername());
 		userService.update(originUser);
 		return "SUCCESS";
+	}
+	
+	public void getUserInfoAsync(){
+		String userId = ServletActionContext.getRequest().getParameter("userId");
+		user =  userService.findById(Integer.valueOf(userId));
+		JSONObject jo = JSONObject.fromObject(user);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("UTF-8");
+		try {
+			response.getWriter().write(jo.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void resetUserPwd(){
+		String userId = ServletActionContext.getRequest().getParameter("userId");
+		user =  userService.findById(Integer.valueOf(userId));
+		user.setPassword(MD5.md5s(user.getUsername()));
+		userService.update(user);
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("UTF-8");
+		try {
+			response.getWriter().write("SUCCESS");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public String getMsg() {
 		return msg;

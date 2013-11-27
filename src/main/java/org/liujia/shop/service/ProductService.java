@@ -14,8 +14,9 @@ public interface ProductService {
 	public void update(Product product);
 	public void delete(Product product);
 	
-	public List<Product> search(String keyword);//ʹ��compass��������Ʒ
+	public List<Product> search(String keyword);//compass
 	public Product findById(Integer productId);
+	public Product findProductByName(String productName);
 	public List<Product> findByCategoryId(Integer categoryId);
 	public List<Product> findAll();
 }

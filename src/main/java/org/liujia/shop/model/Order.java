@@ -33,7 +33,7 @@ public class Order implements Serializable{
 	private String remark;
 	private Date sendTime;
 	private String address;
-	private float totoalPrice;
+	private float totalPrice;
 	private List<Cart> cart=new ArrayList<Cart>();
 	private Integer userId;
 	private List<Product> product;
@@ -69,11 +69,11 @@ public class Order implements Serializable{
 	}
 	
 	@Column(name="total_price",nullable=false)
-	public float getTotoalPrice() {
-		return totoalPrice;
+	public float getTotalPrice() {
+		return totalPrice;
 	}
-	public void setTotoalPrice(float totoalPrice) {
-		this.totoalPrice = totoalPrice;
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
 	@OneToMany(targetEntity=Cart.class,cascade=CascadeType.ALL,fetch=FetchType.EAGER)

@@ -18,9 +18,15 @@ body {
 }
 -->
 </style>
+	<script type="text/javascript" src="../front/js/jquery-1.6.4.min.js"></script>
 <script language="JavaScript">
+
+$(document).ready(function(){
+	  $("#adminName").focus();
+});
+
 function correctPNG()
-{
+{	
     var arVersion = navigator.appVersion.split("MSIE")
     var version = parseFloat(arVersion[1])
     if ((version >= 5.5) && (document.body.filters)) 
@@ -46,9 +52,10 @@ function correctPNG()
              j = j-1
           }
        }
-    }    
+    }
 }
 window.attachEvent("onload", correctPNG);
+
 </script>
 
 
@@ -115,7 +122,7 @@ window.attachEvent("onload", correctPNG);
                         <table cellSpacing="0" cellPadding="0" width="100%" border="0" height="143" id="table212">
                           <tr>
                             <td width="13%" height="38" class="top_hui_text"><span class="login_txt">π‹¿Ì‘±£∫&nbsp;&nbsp; </span></td>
-                            <td height="38" colspan="2" class="top_hui_text"><input name="admin.name" class="editbox4" value="" size="20">                            </td>
+                            <td height="38" colspan="2" class="top_hui_text"><input id="adminName" name="admin.name" class="editbox4" value="" size="20">                            </td>
                           </tr>
                           <tr>
                             <td width="13%" height="35" class="top_hui_text"><span class="login_txt"> √‹ ¬Î£∫ &nbsp;&nbsp; </span></td>

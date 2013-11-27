@@ -13,4 +13,6 @@ public interface ProductDao extends GenericDao<Product, Integer> {
 
 	public List<Product> findProductByCategoryId(Integer id);
 
+	public Product findProductByName(String productName);
+
 }

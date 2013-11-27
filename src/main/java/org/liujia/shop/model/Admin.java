@@ -1,7 +1,9 @@
 package org.liujia.shop.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +19,13 @@ public class Admin implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 9153612764983714608L;
+	
 	private Integer id;
 	private String name;
 	private String password;
 	private String type;
+	private Date lastLoginTime;
+	
 	@Id
 	@GeneratedValue
 	public Integer getId() {
@@ -47,4 +52,12 @@ public class Admin implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+	@Column(name="last_login_time")
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	
 }

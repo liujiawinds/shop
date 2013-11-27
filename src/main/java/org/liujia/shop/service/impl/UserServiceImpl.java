@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
 				pr.setId(order.getId().toString());
 				pr.setOrderTime(order.getOrderTime().toLocaleString());
 				pr.setStatus(order.getStatus());
-				pr.setTotalPrice(String.valueOf(order.getTotoalPrice()));
+				pr.setTotalPrice(String.valueOf(order.getTotalPrice()));
 				List<Cart> cartList = cartDao.findCartByOrderId(order.getId());
 				if(cartList!=null && cartList.size()>0){
 					String productNames = "";

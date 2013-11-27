@@ -1,37 +1,28 @@
 package org.liujia.shop.action;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.apache.struts2.ServletActionContext;
+import org.liujia.core.service.QueryService;
 import org.liujia.shop.model.Admin;
 import org.liujia.shop.service.AdminService;
 
 import com.opensymphony.xwork2.ActionContext;
 
 public class AdminAction {
+	
+	
 	private Admin admin;
-	private int	adminId;
 	private AdminService adminService;
+	private QueryService<Admin> queryService;
 	
-	
-	public Admin getAdmin() {
-		return admin;
-	}
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
-	}
-	
-	public int getAdminId() {
-		return adminId;
-	}
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
-	}
 	
 	public String login(){
 		HttpServletRequest request=(HttpServletRequest) ServletActionContext.getRequest();
@@ -51,18 +42,43 @@ public class AdminAction {
 		}
 	}
 	
-	/**删除管理员
-	 * 
-	 */
-	public void delete(){
-		adminService.deleteById(adminId);
-	}
+	
 	
 	/**新增管理员
 	 * @return
 	 */
 	public String add(){
 		adminService.save(admin);
+		ServletActionContext.getRequest().setAttribute("msg", "管理员添加成功！");
 		return "SUCCESS";
 	}
+	
+	public void getLoginInfo(){
+		List<Map<String ,Object>> adminList = queryService.getList(Admin.class, "", "", "", true);
+		String jsonArray = JSONArray.fromObject(adminList).toString();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("UTF-8");
+		try {
+			response.getWriter().write(jsonArray);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public Admin getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+	
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
+	}
+
+	public void setQueryService(QueryService<Admin> queryService) {
+		this.queryService = queryService;
+	}
+	
 }

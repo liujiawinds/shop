@@ -1,125 +1,72 @@
 package org.liujia.shop.action;
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 
+
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
-import org.liujia.core.service.QueryService;
-import org.liujia.shop.model.Category;
 import org.liujia.shop.model.Product;
-import org.liujia.shop.service.CategoryService;
 import org.liujia.shop.service.ProductService;
 
 
 import com.opensymphony.xwork2.ActionContext;
 
-@SuppressWarnings("unchecked")
 public class ProductAction {
-	private static final long serialVersionUID = 572146812454l ;
-	private static final int BUFFER_SIZE = 16 * 1024 ;
 	
 	private String keyword;
 	private Product product;
 	private int categoryId;
 	private Integer productId;
 	private ProductService productService;
-	private CategoryService categoryService;
-	private List<File> myFile = new ArrayList<File>();;
-    private List<String> fileName = new ArrayList<String>();
-    private List<String> imageFileName = new ArrayList<String>();
+	private File[] uploads;
+    private String[] uploadFileNames;
+    private String[] uploadContentTypes;
     
-    
-	public Integer getProductId() {
-		return productId;
-	}
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-	public String getKeyword() {
-		return keyword;
-	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-	public ProductService getProductService() {
-		return productService;
-	}
-	public void setProductService(ProductService productService) {
-		this.productService = productService;
-	}
-	public int getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-	
-	public void setCategoryService(CategoryService categoryService) {
-		this.categoryService = categoryService;
-	}
-	
-	public List<File> getMyFile() {
-		return myFile;
-	}
-	public void setMyFile(List<File> myFile) {
-		this.myFile = myFile;
-	}
-	public List<String> getFileName() {
-		return fileName;
-	}
-	public void setFileName(List<String> fileName) {
-		this.fileName = fileName;
-	}
-	public List<String> getImageFileName() {
-		return imageFileName;
-	}
-	public void setImageFileName(List<String> imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-	
 	
 	public String list(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String requestSource = request.getParameter("requestSource");
 		Map<String , Object> session = ActionContext.getContext().getSession();
 		List<Product> list = productService.findAll();
 		session.put("products",	 list);
-		return "SUCCESS";
+		if("info".equals(requestSource)){
+			return "INFO";
+		}else if("manage".equals(requestSource)){
+			return "MANAGE";
+		}else{
+			return null;
+		}
 	}
 	
 	public String show(){
-		Map session=ActionContext.getContext().getSession();
+		Map<String, Object> session=ActionContext.getContext().getSession();
 		List<Product> products = productService.findByCategoryId(categoryId);
 		session.put("products", products);
 		return "SUCCESS";
 	}
 	
 	public String detail(){
-		Map session=ActionContext.getContext().getSession();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String requestSource = request.getParameter("requestSource");
+		Map<String, Object> session=ActionContext.getContext().getSession();
 		product = productService.findById(productId);
 		session.put("product", product);
-		return "SUCCESS";
+		if("manage".equals(requestSource)){
+			return "MANAGE";
+		}else{
+			return "SUCCESS";
+		}
 	}
 	
 	public String search(){
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 		String temp = null;
 		try {
 			temp = new String(keyword.getBytes("ISO-8859-1"),"UTF-8");
@@ -133,51 +80,97 @@ public class ProductAction {
 		return "SUCCESS";
 	}
 	
-	public String add(){
-		Map<String , Object> session = ActionContext.getContext().getSession();
-		List<Product> list = productService.findAll();
-		
-		String[] str = { "ou", "in", "fr", "cu","bk" };
-		for(String s : str){
-//				imageFileName = list.size()+"_"+s+"_l"+getExtention(fileName);
-				File imageFile = new File(ServletActionContext.getServletContext().getRealPath( " /front/images/content/product/"+list.size() ) + " / " + imageFileName);
-//				copy(myFile, imageFile);
-		}
-		return null;
+	  // 文件上传
+    @SuppressWarnings("deprecation")
+    public String add() throws Exception {
+    	if(product != null){
+    		product.setAddTime(new Date());
+    		productService.save(product);
+    	}
+    	product = productService.findProductByName(product.getName());
+        // 获得upload路径的实际目录
+    	String realPath = ServletActionContext.getRequest().getRealPath("/front/images/content/product");
+        // 获得实际目录
+        String targetDirectory = realPath;
+        String[] mydir = new String[uploads.length];
+        String[] tname = new String[uploads.length];
+        for (int i = 0; i < uploads.length; i++) {
+            // 生成保存文件的文件名称
+            tname[i] = generateFileName(uploadFileNames[i],product.getId());
+            // 保存文件的路径
+            mydir[i] = targetDirectory + "\\" + product.getId()+"\\"+tname[i];
+            // 建立一个目标文件
+            File target = new File(targetDirectory+"\\" + product.getId(), tname[i]);
+            // 将临时文件复制到目标文件
+            FileUtils.copyFile(uploads[i], target);
+        }
+        return "SUCCESS";
+    }
+
+    private String generateFileName(String fileName,Integer productId) {
+        fileName = fileName.replaceAll("\\d+", productId.toString());
+        return fileName;
+    }
+    
+	public static void main(String[] args) {
+		String fileName = new ProductAction().generateFileName("404064/404064_ou_xs.jpg", 1);
+		System.out.println(fileName);
 	}
-	
-	private static void copy(File src, File dst) {
-        try {
-           InputStream in = null ;
-           OutputStream out = null ;
-            try {                
-               in = new BufferedInputStream( new FileInputStream(src), BUFFER_SIZE);
-               out = new BufferedOutputStream( new FileOutputStream(dst), BUFFER_SIZE);
-                byte [] buffer = new byte [BUFFER_SIZE];
-                while (in.read(buffer) > 0 ) {
-                   out.write(buffer);
-               } 
-           } finally {
-                if ( null != in) {
-                   in.close();
-               } 
-                if ( null != out) {
-                   out.close();
-               } 
-           } 
-       } catch (Exception e) {
-           e.printStackTrace();
-       } 
-   } 
-	
-	 private static List<String> getExtention(List<String> fileName) {
-		 List<String> extensionList = new ArrayList<String>();
-         for(String str: fileName){
-        	 int pos = str.lastIndexOf( " . " );
-        	  String extension = str.substring(pos);
-        	  extensionList.add(extension);
-         }
-         return extensionList;
-    } 
-	
+	 
+	 public Integer getProductId() {
+			return productId;
+		}
+		public void setProductId(Integer productId) {
+			this.productId = productId;
+		}
+		public String getKeyword() {
+			return keyword;
+		}
+		public void setKeyword(String keyword) {
+			this.keyword = keyword;
+		}
+		public ProductService getProductService() {
+			return productService;
+		}
+		public void setProductService(ProductService productService) {
+			this.productService = productService;
+		}
+		public int getCategoryId() {
+			return categoryId;
+		}
+		public void setCategoryId(int categoryId) {
+			this.categoryId = categoryId;
+		}
+
+		public Product getProduct() {
+			return product;
+		}
+		public void setProduct(Product product) {
+			this.product = product;
+		}
+
+		public File[] getUpload() {
+	        return this.uploads;
+	    }
+
+	    public void setUpload(File[] upload) {
+	        this.uploads = upload;
+	    }
+
+	    public String[] getUploadFileName() {
+	        return this.uploadFileNames;
+	    }
+
+	    public void setUploadFileName(String[] uploadFileName) {
+	        this.uploadFileNames = uploadFileName;
+	    }
+
+	    public String[] getUploadContentType() {
+	        return this.uploadContentTypes;
+	    }
+
+	    public void setUploadContentType(String[] uploadContentType) {
+	        this.uploadContentTypes = uploadContentType;
+	    }
+
 }

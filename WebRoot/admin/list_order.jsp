@@ -10,30 +10,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/layer/layer.js"></script>
-<title>show user</title>
+<title>show order</title>
 </head>
 <body >
 <CENTER>
-<h1>会员信息查看</h1>
+<h1>订单信息查看</h1>
 <hr>
 	<table width="auto" border="1">
 	<tr>
-		<th>用户ID</th>
-		<th>用户名</th>
+		<th>订单ID</th>
+		<th>下单时间</th>
+		<th>下单用户</th>
 		<th>地址</th>
-		<th>电话</th>
-		<th>注册日期</th>
-		<th>邮箱</th>
-		<th>账户金额</th>
+		<th>总价</th>
+		<th>付款方式</th>
+		<th>当前状态</th>
 	</tr>
-	<c:forEach var="user" items="${usersInDb}">
-		<tr><td>${user.id }</td><td>${user.username }</td><td>${user.address }</td><td>${user.telephone }</td>
-			<td><fmt:formatDate value="${user.registDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td><td>${user.email }</td><td>${user.balance }</td>
+	<c:forEach var="order" items="${orderList}">
+		<tr><td>${order.id }</td><td><fmt:formatDate value="${order.orderTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td><td>${order.userId }</td><td>${order.address }</td>
+			<td>￥${order.totalPrice }</td><td>${order.payment }</td><td>${order.status }</td>
 		</tr>
 	</c:forEach>
 	</table>
 	</CENTER>
-	<div style="position:absolute;top:400px;left:800px;">*  双击修改用户信息</div>
+	<div style="position:absolute;top:400px;left:800px;">*  双击修改订单信息</div>
 </body>
 	<script type="text/javascript">
 		$("tr").dblclick(function(){
@@ -41,7 +41,7 @@
 			  $.layer({
 					type : 2,
 					title : '用户基本信息修改',
-					iframe : {src : 'getUserInfo.action?userId='+id},
+					iframe : {src : 'getorderInfo.action?orderId='+id},
 					area : ['500px' , '270px'],
 					offset : ['100px','']
 				});

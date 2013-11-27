@@ -7,4 +7,5 @@ import org.liujia.shop.model.Admin;
 
 public interface AdminDao extends GenericDao<Admin, Integer> {
 	public Admin login(String name,String password);
+	public Admin findByName(String name);
 }

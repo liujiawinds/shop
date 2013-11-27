@@ -1,14 +1,14 @@
 package org.liujia.shop.action;
 
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.ServletActionContext;
+import org.liujia.core.service.QueryService;
 import org.liujia.shop.model.Cart;
 import org.liujia.shop.model.Order;
 import org.liujia.shop.model.Product;
@@ -19,29 +19,27 @@ import org.liujia.shop.service.ProductService;
 
 import com.opensymphony.xwork2.ActionContext;
 
+@SuppressWarnings("unchecked")
 public class OrderAction {
+	
 	private Order order;
 	private OrderService orderService;
 	private CartService cartService;
 	private ProductService productService;
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+	private QueryService<Order> queryService;
 	
-	public void setProductService(ProductService productService) {
-		this.productService = productService;
-	}
-
-	public void setCartService(CartService cartService) {
-		this.cartService = cartService;
-	}
-
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
+	
+	public String listAll(){
+		List<Map<String,Object>> orderList = queryService.getList(Order.class, "", "", "", true);
+		for(Map<String ,Object> order : orderList){
+			Method[] methods = Order.class.getMethods();
+			for(Method method : methods){
+				method.getName();
+			}
+		}
+		
+		ServletActionContext.getRequest().setAttribute("orderList", orderList);
+		return "SUCCESS";
 	}
 	
 	public String show(){
@@ -63,6 +61,7 @@ public class OrderAction {
 		return "SUCCESS";
 	}
 	
+	
 	public String add(){
 		Map<String ,Object> session = ActionContext.getContext().getSession();
 		User user = (User) session.get("user_logined");
@@ -75,7 +74,7 @@ public class OrderAction {
 		List<Cart> cartItems = (List<Cart>) session.get("cartItems");
 		order.setCart(cartItems);
 		float totalPrice = Float.valueOf(session.get("totalPrice").toString());
-		order.setTotoalPrice(totalPrice);
+		order.setTotalPrice(totalPrice);
 		order.setAddress(user.getAddress());
 		order.setPayment("货到付款");
 		order.setStatus("待发货");
@@ -90,6 +89,31 @@ public class OrderAction {
 			session.remove("cartItems");
 		}
 		return "SUCCESS";
+	}
+	
+	
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	
+	public void setProductService(ProductService productService) {
+		this.productService = productService;
+	}
+
+	public void setCartService(CartService cartService) {
+		this.cartService = cartService;
+	}
+
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
+	}
+
+	public void setQueryService(QueryService<Order> queryService) {
+		this.queryService = queryService;
 	}
 	
 }

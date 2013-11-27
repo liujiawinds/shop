@@ -9,7 +9,8 @@
 		
 		<!-- list，获取商品列表 -->
 		<action name="list_product" class="productAction" method="list">
-			<result name="SUCCESS" type="redirect">/admin/list_product.jsp</result>
+			<result name="INFO" type="redirect">/admin/list_product.jsp</result>
+			<result name="MANAGE" type="redirect">/admin/manage_product.jsp</result>
 		</action>		
 		<action name="list_user" class="userAction" method="listAll">
 			<result name="SUCCESS" type="redirect">/admin/list_user.jsp</result>
@@ -17,14 +18,41 @@
 		<action name="saveUserInfo" class="userAction" method="saveUserInfo">
 			<result name="SUCCESS" type="redirectAction">/admin/list_user.action</result>
 		</action>
+		<action name="getProductInfo" class="userAction" method="getProductInfo">
+			<result name="SUCCESS" type="redirectAction">/admin/edit_product_info.jsp</result>
+		</action>
 		<action name="getUserInfo" class="userAction" method="getUserInfo">
 			<result name="SUCCESS">/admin/edit_user_info.jsp</result>
 		</action>
+		
 		<action name="login_admin" class="adminAction" method="login">
 			<result name="SUCCESS" type="redirect">/admin/index.html</result>
 			<result name="LOGIN" type="redirect">/admin/login.jsp</result>
 		</action>		
+
+		<action name="add_admin" class="adminAction" method="add">
+			<result name="SUCCESS">/admin/add_admin.jsp</result>
+		</action>		
+		
 		<action name="getCategory" class="categoryAction" method="getCategory" />
+		
+		<action name="getUserInfoAsync" class="userAction" method="getUserInfoAsync" />
+		
+		<action name="resetUserPwd" class="userAction" method="resetUserPwd" />
+		
+		<action name="adminLoginInfo" class="adminAction" method="getLoginInfo" />
+		
+		<action name="product_detail" class="productAction" method="detail">
+			<result name="MANAGE">/admin/edit_product_info.jsp</result>
+		</action>
+		
+		<action name="add_product" class="productAction" method="add">
+			<result name="SUCCESS">/admin/add_product.jsp</result>
+		</action>
+		
+		<action name="listAll" class="orderAction" method="listAll">
+			<result name="SUCCESS">/admin/list_order.jsp</result>
+		</action>
 	</package>
 	
 </struts>

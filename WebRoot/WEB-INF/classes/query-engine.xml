@@ -37,12 +37,12 @@
 		<parm name="id" property="id" />
 		<parm name="orderTime" property="orderTime" />
 		<parm name="status" property="status" />
-		<parm name="payway" property="payway" />
+		<parm name="payment" property="payment" />
 		<parm name="remark" property="remark" />
 		<parm name="sendTime" property="sendTime" />
 		<parm name="address" property="address" />
-		<parm name="totoalPrice" property="totoalPrice" />
-		<parm name="cart" property="cart" />
+		<parm name="totalPrice" property="totalPrice" />
+		<parm name="cart" property="cart" is-select="false" />
 		<parm name="product" property="product" is-select="false"/>
 		<parm name="userId" property="userId" />
 	</class>	
@@ -73,5 +73,6 @@
 		<parm name="name" property="name" />
 		<parm name="password" property="password" />
 		<parm name="type" property="type" />
+		<parm name="lastLoginTime" property="lastLoginTime" />
 	</class>
 </query>

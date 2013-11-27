@@ -7,13 +7,17 @@ import org.liujia.shop.dao.AdminDao;
 import org.liujia.shop.model.Admin;
 
 
-
+@SuppressWarnings("unchecked")
 public class AdminDaoImpl extends GenericDaoHibImpl<Admin, Integer>	implements AdminDao{
 
-	@SuppressWarnings("unchecked")
 	public Admin login(String name, String password) {
-		// TODO Auto-generated method stub
 		List<Admin> list=getHibernateTemplate().find("from Admin admin where admin.name=?and admin.password=?",name,password);
+		return list.size()!=0?list.get(0):null;
+	}
+
+	
+	public Admin findByName(String name) {
+		List<Admin> list=getHibernateTemplate().find("from Admin admin where admin.name=?",name);
 		return list.size()!=0?list.get(0):null;
 	}
 	

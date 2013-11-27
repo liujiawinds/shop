@@ -1,6 +1,8 @@
 package org.liujia.core.service.impl;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +11,9 @@ import org.liujia.core.dao.support.QueryEngine;
 import org.liujia.core.dao.support.QueryExpressionAnalysis;
 import org.liujia.core.service.QueryService;
 import org.liujia.core.util.PageSupport;
-import org.liujia.shop.model.Product;
+import org.liujia.shop.model.Admin;
 
+@SuppressWarnings("unchecked")
 public class QueryServiceImpl<T> implements QueryService<T> {
 	
 	private QueryEngine queryEngine;
@@ -92,4 +95,33 @@ public class QueryServiceImpl<T> implements QueryService<T> {
 		return item;
 	}
 	
+	private T MapToEntity(Map<String ,Object> objectMap, Class T){
+		Object obj = null;
+		try {
+			obj = T.newInstance();
+			Method[] methods = T.getMethods();
+			for(Method method : methods){
+				for(String key : objectMap.keySet()){
+					if(method.getName().contains("set") && key.equalsIgnoreCase(method.getName().substring(3)) ){
+						method.invoke(obj, objectMap.get(key));
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (T) obj;
+	}
+	
+	public static void main(String[] args) {
+		Map<String,Object> objectMap = new HashMap<String, Object>();
+		objectMap.put("id", 1);
+		objectMap.put("name", "liujia");
+		objectMap.put("password", "123");
+		objectMap.put("type", "normal");
+		objectMap.put("lastLoginTime", new Date());
+		
+		Admin admin = new QueryServiceImpl<Admin>().MapToEntity(objectMap, Admin.class);
+		System.out.println("!");
+	}
 }

@@ -14,26 +14,25 @@
 </head>
 <body >
 <CENTER>
-<h1>会员信息查看</h1>
+<h1>商品信息管理</h1>
 <hr>
-	<table width="auto" border="1">
+	<table width="80%" border="1" bordercolor="gray">
 	<tr>
-		<th>用户ID</th>
-		<th>用户名</th>
-		<th>地址</th>
-		<th>电话</th>
-		<th>注册日期</th>
-		<th>邮箱</th>
-		<th>账户金额</th>
+		<th>商品ID</th>
+		<th>商品名</th>
+		<th>类别</th>
+		<th>价格</th>
+		<th>设计师</th>
+		<th>剩余数量</th>
+		<th>商品描述</th>
 	</tr>
-	<c:forEach var="user" items="${usersInDb}">
-		<tr><td>${user.id }</td><td>${user.username }</td><td>${user.address }</td><td>${user.telephone }</td>
-			<td><fmt:formatDate value="${user.registDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td><td>${user.email }</td><td>${user.balance }</td>
+	<c:forEach var="product" items="${products}">
+		<tr><td width="70px">${product.id }</td><td width="10%">${product.name }</td><td width="10%">${product.category.name }</td><td width="70px">${product.price }</td>
+			<td width="10%">${product.designer }</td><td width="70px">${product.amount }</td><td width="auto">${product.description }</td>
 		</tr>
 	</c:forEach>
 	</table>
 	</CENTER>
-	<div style="position:absolute;top:400px;left:800px;">*  双击修改用户信息</div>
 </body>
 	<script type="text/javascript">
 		$("tr").dblclick(function(){
@@ -41,7 +40,7 @@
 			  $.layer({
 					type : 2,
 					title : '用户基本信息修改',
-					iframe : {src : 'getUserInfo.action?userId='+id},
+					iframe : {src : 'front/product_detail.action?requestSource=manage&productId='+id},
 					area : ['500px' , '270px'],
 					offset : ['100px','']
 				});
