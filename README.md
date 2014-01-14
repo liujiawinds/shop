@@ -10,6 +10,7 @@ Shop是基于B2C模式的电商平台，使用struts2, hibernate, spring为框�
 2.使用struts2, hibernate, spring框架
 
 3.数据库mysql
+
 ====
 
 mysql
