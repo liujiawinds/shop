@@ -10,13 +10,18 @@ Shop是基于B2C模式的电商平台，使用struts2, hibernate, spring为框�
 2.使用struts2, hibernate, spring框架
 
 3.数据库mysql
-
+====
 
 mysql
 
-5.测试使用方法：
+1.测试使用方法：
 
 在mysql里建立 名为shop的数据库，设置编码为utf-8
 
 进入项目根目录，复制shop.sql然后在数据库中运行。
 
+
+====
+运行方式：
+部署到tomcat中，启动tomcat
+在浏览器中输入http://localhost:(server port)/shop 即可
